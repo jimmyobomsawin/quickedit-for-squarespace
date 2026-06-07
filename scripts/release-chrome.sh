@@ -18,7 +18,21 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &>/dev/null && pwd )"
 REPO_DIR="$( dirname "$SCRIPT_DIR" )"
 DIST_DIR="$REPO_DIR/dist"
 
-VERSION="${1:?usage: $0 <version> [--auto-publish|--dry-run]}"
+# Preflight: `--check` verifies all four credentials are present (no secrets printed).
+if [[ "${1:-}" == "--check" ]]; then
+  ok=1
+  for acct in clientId clientSecret refreshToken extensionId; do
+    if security find-generic-password -s QuickEditForSquarespace_CWS -a "$acct" -w >/dev/null 2>&1; then
+      echo "  ✓ $acct"
+    else
+      echo "  ✗ $acct (missing)"; ok=0
+    fi
+  done
+  [ "$ok" = 1 ] && { echo "✓ all Chrome Web Store credentials present"; exit 0; } \
+                || { echo "❌ set the missing entries (see this script's header)"; exit 1; }
+fi
+
+VERSION="${1:?usage: $0 <version> [--auto-publish|--dry-run|--check]}"
 MODE="${2:-}"
 
 # Build the zip.
@@ -57,8 +71,8 @@ if [[ "$MODE" == "--auto-publish" ]]; then
     --extension-id "$EXT_ID"
 fi
 
-# GitHub release (best-effort).
-if command -v gh >/dev/null 2>&1; then
+# GitHub release (best-effort; skipped when this repo has no remote).
+if command -v gh >/dev/null 2>&1 && git -C "$REPO_DIR" remote 2>/dev/null | grep -q .; then
   TAG="v$VERSION"
   if gh release view "$TAG" >/dev/null 2>&1; then
     echo "→ uploading zip to existing GitHub release $TAG…"
