@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- App Store distribution; xcodebuild will produce a .pkg ready for App Store Connect upload. -->
+    <key>method</key>
+    <string>app-store-connect</string>
+
+    <!-- Let Xcode pick the App Store Connect distribution provisioning profile automatically.
+         Requires your Apple ID / Developer team to be added in Xcode → Settings → Accounts. -->
+    <key>signingStyle</key>
+    <string>automatic</string>
+
+    <!-- Upload dSYMs alongside the binary for crash symbolication in App Store Connect. -->
+    <key>uploadSymbols</key>
+    <true/>
+
+    <!-- destination "export" writes the .pkg to disk; "upload" would push directly to ASC.
+         We keep this as "export" so the release script can do the upload step itself. -->
+    <key>destination</key>
+    <string>export</string>
+</dict>
+</plist>

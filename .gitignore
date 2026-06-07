@@ -1,0 +1,22 @@
+# Build outputs
+build/
+dist/
+*.xcarchive
+*.pkg
+*.zip
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# macOS
+.DS_Store
+*.swp
+
+# Notes / stashed
+.old-README.md
+
+# Editor
+.vscode/
+.idea/

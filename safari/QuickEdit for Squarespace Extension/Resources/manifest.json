@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+  "name": "QuickEdit for Squarespace",
+  "version": "1.0",
+  "description": "One-click jump from any page on your Squarespace site to its editor.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.squarespace.com/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_title": "QuickEdit for Squarespace — settings",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.squarespace.com/config/*"
+      ],
+      "js": [
+        "admin_inject.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://account.squarespace.com/*"
+      ],
+      "js": [
+        "account_inject.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

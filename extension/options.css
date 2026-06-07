@@ -1,0 +1,239 @@
+:root {
+  --bg: #fafafa;
+  --fg: #1d1d1f;
+  --muted: #6b6b70;
+  --border: #e4e4e7;
+  --accent: #0a84ff;
+  --accent-fg: #fff;
+  --danger: #c93636;
+  --ok: #137333;
+  --row-hover: #f3f4f6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 920px;
+  margin: 40px auto;
+  padding: 0 24px 80px;
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.sub {
+  color: var(--muted);
+  max-width: 70ch;
+  margin: 0 0 28px;
+}
+
+section { margin-top: 28px; }
+
+h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 600;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.section-actions {
+  display: flex;
+  gap: 8px;
+}
+
+button.ghost-button {
+  background: #fff;
+  color: var(--fg);
+}
+
+button.ghost-button:hover {
+  background: var(--row-hover);
+}
+
+button.danger-button {
+  background: #fff;
+  color: var(--danger);
+  border-color: var(--border);
+}
+
+button.danger-button:hover {
+  background: #fff0f0;
+  border-color: var(--danger);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: #f7f7f8;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr { border-top: 1px solid var(--border); }
+tbody tr:first-child { border-top: none; }
+tbody td { padding: 8px 10px; vertical-align: middle; }
+tbody tr:hover { background: var(--row-hover); }
+
+input[type="text"] {
+  width: 100%;
+  padding: 6px 9px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font-family: inherit;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+}
+
+button {
+  font: inherit;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+button.primary:hover { filter: brightness(1.05); }
+
+button.ghost {
+  background: transparent;
+  margin-top: 10px;
+  color: var(--accent);
+  border-color: transparent;
+  padding-left: 4px;
+}
+
+button.ghost:hover { text-decoration: underline; }
+
+button.danger-link {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  padding: 4px 6px;
+}
+
+button.danger-link:hover { text-decoration: underline; }
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#status { color: var(--ok); font-size: 13px; }
+#status.err { color: var(--danger); }
+
+.banner {
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  background: #fff7d6;
+  border: 1px solid #f5dc8a;
+  color: #5a4400;
+}
+
+code {
+  background: #f1f1f2;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12.5px;
+}
+
+.help {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.help h3 {
+  font-size: 13px;
+  margin: 0 0 6px;
+  color: var(--fg);
+}
+
+.help ul { margin: 0; padding-left: 20px; }
+
+td.actions { width: 1%; white-space: nowrap; text-align: right; }
+td.col-domain, th.col-domain { width: 38%; }
+td.col-sub, th.col-sub { width: 52%; }
+
+.input-with-suffix {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+.input-with-suffix:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+}
+.input-with-suffix input[type="text"] {
+  border: none;
+  border-radius: 0;
+  flex: 1;
+  min-width: 0;
+}
+.input-with-suffix input[type="text"]:focus {
+  box-shadow: none;
+}
+.input-with-suffix .suffix {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  background: #f3f4f6;
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+  border-left: 1px solid var(--border);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Mono", ui-monospace, monospace;
+}

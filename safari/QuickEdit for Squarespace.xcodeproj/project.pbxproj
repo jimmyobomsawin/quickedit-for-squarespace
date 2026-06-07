@@ -1,0 +1,635 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		366097F72FD3AAFC00C309CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366097F62FD3AAFC00C309CA /* AppDelegate.swift */; };
+		366097FB2FD3AAFC00C309CA /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 366097F92FD3AAFC00C309CA /* Main.html */; };
+		366097FD2FD3AAFC00C309CA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 366097FC2FD3AAFC00C309CA /* Icon.png */; };
+		366097FF2FD3AAFC00C309CA /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 366097FE2FD3AAFC00C309CA /* Style.css */; };
+		366098012FD3AAFC00C309CA /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098002FD3AAFC00C309CA /* Script.js */; };
+		366098032FD3AAFC00C309CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366098022FD3AAFC00C309CA /* ViewController.swift */; };
+		366098062FD3AAFC00C309CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 366098042FD3AAFC00C309CA /* Main.storyboard */; };
+		366098082FD3AAFD00C309CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 366098072FD3AAFD00C309CA /* Assets.xcassets */; };
+		3660980F2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3660980E2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		366098142FD3AAFD00C309CA /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366098132FD3AAFD00C309CA /* SafariWebExtensionHandler.swift */; };
+		366098292FD3AAFD00C309CA /* admin_inject.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098202FD3AAFD00C309CA /* admin_inject.js */; };
+		3660982A2FD3AAFD00C309CA /* overlay_inject.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098212FD3AAFD00C309CA /* overlay_inject.js */; };
+		3660982B2FD3AAFD00C309CA /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098222FD3AAFD00C309CA /* background.js */; };
+		3660982C2FD3AAFD00C309CA /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098232FD3AAFD00C309CA /* options.js */; };
+		3660982D2FD3AAFD00C309CA /* account_inject.js in Resources */ = {isa = PBXBuildFile; fileRef = 366098242FD3AAFD00C309CA /* account_inject.js */; };
+		3660982E2FD3AAFD00C309CA /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 366098252FD3AAFD00C309CA /* icons */; };
+		3660982F2FD3AAFD00C309CA /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 366098262FD3AAFD00C309CA /* manifest.json */; };
+		366098302FD3AAFD00C309CA /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = 366098272FD3AAFD00C309CA /* options.html */; };
+		366098312FD3AAFD00C309CA /* options.css in Resources */ = {isa = PBXBuildFile; fileRef = 366098282FD3AAFD00C309CA /* options.css */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		366098102FD3AAFD00C309CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 366097EB2FD3AAFC00C309CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3660980D2FD3AAFD00C309CA;
+			remoteInfo = "QuickEdit for Squarespace Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3660981B2FD3AAFD00C309CA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3660980F2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		366097F32FD3AAFC00C309CA /* QuickEdit for Squarespace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QuickEdit for Squarespace.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		366097F62FD3AAFC00C309CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		366097FA2FD3AAFC00C309CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		366097FC2FD3AAFC00C309CA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		366097FE2FD3AAFC00C309CA /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		366098002FD3AAFC00C309CA /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		366098022FD3AAFC00C309CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		366098052FD3AAFC00C309CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		366098072FD3AAFD00C309CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		366098092FD3AAFD00C309CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3660980E2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "QuickEdit for Squarespace Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		366098132FD3AAFD00C309CA /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		366098152FD3AAFD00C309CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		366098202FD3AAFD00C309CA /* admin_inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = admin_inject.js; path = Resources/admin_inject.js; sourceTree = "<group>"; };
+		366098212FD3AAFD00C309CA /* overlay_inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = overlay_inject.js; path = Resources/overlay_inject.js; sourceTree = "<group>"; };
+		366098222FD3AAFD00C309CA /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = Resources/background.js; sourceTree = "<group>"; };
+		366098232FD3AAFD00C309CA /* options.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = options.js; path = Resources/options.js; sourceTree = "<group>"; };
+		366098242FD3AAFD00C309CA /* account_inject.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = account_inject.js; path = Resources/account_inject.js; sourceTree = "<group>"; };
+		366098252FD3AAFD00C309CA /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = Resources/icons; sourceTree = "<group>"; };
+		366098262FD3AAFD00C309CA /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+		366098272FD3AAFD00C309CA /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = Resources/options.html; sourceTree = "<group>"; };
+		366098282FD3AAFD00C309CA /* options.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = options.css; path = Resources/options.css; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		366097F02FD3AAFC00C309CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3660980B2FD3AAFD00C309CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		366097EA2FD3AAFC00C309CA = {
+			isa = PBXGroup;
+			children = (
+				366097F52FD3AAFC00C309CA /* QuickEdit for Squarespace */,
+				366098122FD3AAFD00C309CA /* QuickEdit for Squarespace Extension */,
+				366097F42FD3AAFC00C309CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		366097F42FD3AAFC00C309CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				366097F32FD3AAFC00C309CA /* QuickEdit for Squarespace.app */,
+				3660980E2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		366097F52FD3AAFC00C309CA /* QuickEdit for Squarespace */ = {
+			isa = PBXGroup;
+			children = (
+				366097F62FD3AAFC00C309CA /* AppDelegate.swift */,
+				366098022FD3AAFC00C309CA /* ViewController.swift */,
+				366098042FD3AAFC00C309CA /* Main.storyboard */,
+				366098072FD3AAFD00C309CA /* Assets.xcassets */,
+				366098092FD3AAFD00C309CA /* Info.plist */,
+				366097F82FD3AAFC00C309CA /* Resources */,
+			);
+			path = "QuickEdit for Squarespace";
+			sourceTree = "<group>";
+		};
+		366097F82FD3AAFC00C309CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				366097F92FD3AAFC00C309CA /* Main.html */,
+				366097FC2FD3AAFC00C309CA /* Icon.png */,
+				366097FE2FD3AAFC00C309CA /* Style.css */,
+				366098002FD3AAFC00C309CA /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		366098122FD3AAFD00C309CA /* QuickEdit for Squarespace Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3660981F2FD3AAFD00C309CA /* Resources */,
+				366098132FD3AAFD00C309CA /* SafariWebExtensionHandler.swift */,
+				366098152FD3AAFD00C309CA /* Info.plist */,
+			);
+			path = "QuickEdit for Squarespace Extension";
+			sourceTree = "<group>";
+		};
+		3660981F2FD3AAFD00C309CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				366098202FD3AAFD00C309CA /* admin_inject.js */,
+				366098212FD3AAFD00C309CA /* overlay_inject.js */,
+				366098222FD3AAFD00C309CA /* background.js */,
+				366098232FD3AAFD00C309CA /* options.js */,
+				366098242FD3AAFD00C309CA /* account_inject.js */,
+				366098252FD3AAFD00C309CA /* icons */,
+				366098262FD3AAFD00C309CA /* manifest.json */,
+				366098272FD3AAFD00C309CA /* options.html */,
+				366098282FD3AAFD00C309CA /* options.css */,
+			);
+			name = Resources;
+			path = "QuickEdit for Squarespace Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		366097F22FD3AAFC00C309CA /* QuickEdit for Squarespace */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3660981C2FD3AAFD00C309CA /* Build configuration list for PBXNativeTarget "QuickEdit for Squarespace" */;
+			buildPhases = (
+				366097EF2FD3AAFC00C309CA /* Sources */,
+				366097F02FD3AAFC00C309CA /* Frameworks */,
+				366097F12FD3AAFC00C309CA /* Resources */,
+				3660981B2FD3AAFD00C309CA /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				366098112FD3AAFD00C309CA /* PBXTargetDependency */,
+			);
+			name = "QuickEdit for Squarespace";
+			packageProductDependencies = (
+			);
+			productName = "QuickEdit for Squarespace";
+			productReference = 366097F32FD3AAFC00C309CA /* QuickEdit for Squarespace.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3660980D2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 366098182FD3AAFD00C309CA /* Build configuration list for PBXNativeTarget "QuickEdit for Squarespace Extension" */;
+			buildPhases = (
+				3660980A2FD3AAFD00C309CA /* Sources */,
+				3660980B2FD3AAFD00C309CA /* Frameworks */,
+				3660980C2FD3AAFD00C309CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "QuickEdit for Squarespace Extension";
+			packageProductDependencies = (
+			);
+			productName = "QuickEdit for Squarespace Extension";
+			productReference = 3660980E2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		366097EB2FD3AAFC00C309CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2650;
+				TargetAttributes = {
+					366097F22FD3AAFC00C309CA = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					3660980D2FD3AAFD00C309CA = {
+						CreatedOnToolsVersion = 26.5;
+					};
+				};
+			};
+			buildConfigurationList = 366097EE2FD3AAFC00C309CA /* Build configuration list for PBXProject "QuickEdit for Squarespace" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 366097EA2FD3AAFC00C309CA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 366097F42FD3AAFC00C309CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				366097F22FD3AAFC00C309CA /* QuickEdit for Squarespace */,
+				3660980D2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		366097F12FD3AAFC00C309CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				366097FD2FD3AAFC00C309CA /* Icon.png in Resources */,
+				366098062FD3AAFC00C309CA /* Main.storyboard in Resources */,
+				366098012FD3AAFC00C309CA /* Script.js in Resources */,
+				366097FB2FD3AAFC00C309CA /* Main.html in Resources */,
+				366098082FD3AAFD00C309CA /* Assets.xcassets in Resources */,
+				366097FF2FD3AAFC00C309CA /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3660980C2FD3AAFD00C309CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3660982A2FD3AAFD00C309CA /* overlay_inject.js in Resources */,
+				3660982F2FD3AAFD00C309CA /* manifest.json in Resources */,
+				366098312FD3AAFD00C309CA /* options.css in Resources */,
+				3660982D2FD3AAFD00C309CA /* account_inject.js in Resources */,
+				366098302FD3AAFD00C309CA /* options.html in Resources */,
+				3660982C2FD3AAFD00C309CA /* options.js in Resources */,
+				3660982E2FD3AAFD00C309CA /* icons in Resources */,
+				3660982B2FD3AAFD00C309CA /* background.js in Resources */,
+				366098292FD3AAFD00C309CA /* admin_inject.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		366097EF2FD3AAFC00C309CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				366098032FD3AAFC00C309CA /* ViewController.swift in Sources */,
+				366097F72FD3AAFC00C309CA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3660980A2FD3AAFD00C309CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				366098142FD3AAFD00C309CA /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		366098112FD3AAFD00C309CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3660980D2FD3AAFD00C309CA /* QuickEdit for Squarespace Extension */;
+			targetProxy = 366098102FD3AAFD00C309CA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		366097F92FD3AAFC00C309CA /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				366097FA2FD3AAFC00C309CA /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		366098042FD3AAFC00C309CA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				366098052FD3AAFC00C309CA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		366098162FD3AAFD00C309CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		366098172FD3AAFD00C309CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		366098192FD3AAFD00C309CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickEdit for Squarespace Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QuickEdit for Squarespace Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimmytechsf.QuickEditForSquarespace.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3660981A2FD3AAFD00C309CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickEdit for Squarespace Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QuickEdit for Squarespace Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimmytechsf.QuickEditForSquarespace.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		3660981D2FD3AAFD00C309CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickEdit for Squarespace/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QuickEdit for Squarespace";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimmytechsf.QuickEditForSquarespace;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3660981E2FD3AAFD00C309CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickEdit for Squarespace/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QuickEdit for Squarespace";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jimmytechsf.QuickEditForSquarespace;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		366097EE2FD3AAFC00C309CA /* Build configuration list for PBXProject "QuickEdit for Squarespace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				366098162FD3AAFD00C309CA /* Debug */,
+				366098172FD3AAFD00C309CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		366098182FD3AAFD00C309CA /* Build configuration list for PBXNativeTarget "QuickEdit for Squarespace Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				366098192FD3AAFD00C309CA /* Debug */,
+				3660981A2FD3AAFD00C309CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3660981C2FD3AAFD00C309CA /* Build configuration list for PBXNativeTarget "QuickEdit for Squarespace" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3660981D2FD3AAFD00C309CA /* Debug */,
+				3660981E2FD3AAFD00C309CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 366097EB2FD3AAFC00C309CA /* Project object */;
+}

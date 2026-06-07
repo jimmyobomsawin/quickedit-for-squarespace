@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QuickEdit for Squarespace — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>QuickEdit for Squarespace</h1>
+      <p class="sub">For each website you own, map its public address to its Squarespace subdomain. A small pencil will appear in the top-left corner of any page on a mapped website. Click it to open that page in the Squarespace editor.</p>
+    </header>
+
+    <div id="banner" class="banner" hidden></div>
+
+    <section>
+      <div class="section-head">
+        <h2>Site mappings</h2>
+        <div class="section-actions">
+          <button id="import" class="ghost-button" title="Pull your site list from account.squarespace.com">Import from Squarespace</button>
+          <button id="removeAll" class="danger-button">Remove all</button>
+        </div>
+      </div>
+
+      <table id="mappings">
+        <thead>
+          <tr>
+            <th class="col-domain">Website</th>
+            <th class="col-sub">Squarespace subdomain</th>
+            <th aria-label="Actions"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button id="add" class="ghost">+ Add site</button>
+    </section>
+
+    <section class="footer-row">
+      <button id="save" class="primary">Save</button>
+      <span id="status" aria-live="polite"></span>
+    </section>
+
+    <section class="help">
+      <h3>Tips</h3>
+      <ul>
+        <li><strong>Import from Squarespace</strong>: open <a href="https://account.squarespace.com" target="_blank" rel="noopener">account.squarespace.com</a>, let it load, then come back here and click Import. The extension pulls each site's name, subdomain, and primary custom domain from your dashboard.</li>
+        <li><strong>Website</strong>: just the domain — e.g. <code>jimmytechsf.com</code>. <code>https://</code>, <code>www.</code>, and trailing slashes are stripped automatically.</li>
+        <li><strong>Squarespace subdomain</strong>: the part before <code>.squarespace.com</code> in your admin URL. Pasting the full URL is fine too; everything except the subdomain gets stripped.</li>
+        <li>You need to be signed in to Squarespace in this browser for the editor to load when you click the overlay.</li>
+      </ul>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
