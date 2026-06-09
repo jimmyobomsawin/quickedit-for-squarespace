@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "QuickEdit for Squarespace",
-  "version": "1.0",
+  "version": "26.6.1",
   "description": "One-click jump from any page on your Squarespace site to its editor.",
   "permissions": [
     "storage",

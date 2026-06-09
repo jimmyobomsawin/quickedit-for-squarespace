@@ -23,9 +23,11 @@ Quick version:
 
 ## Store listing assets
 
-*(Deferred — screenshots, short description, full description, promotional images go here.)*
+Listing copy (short summary, detailed description, release notes) lives in
+[`store-listing.md`](store-listing.md) — paste-ready, kept current with the workflow.
 
 Required by the Chrome Web Store:
-- 128×128 store icon (use `extension/icons/icon-128.png`)
-- 440×280 small promo tile
-- 1280×800 screenshots (at least one, up to five)
+- 128×128 store icon — `../extension/icons/icon-128.png`
+- 440×280 small promo tile — `../landing-page/screenshots/QuickEdit-for-Squarespace-screenshot-promo-tile.png`
+- 1280×800 screenshots (1–5) — `../landing-page/screenshots/QuickEdit-for-Squarespace-screenshot-*.png`
+- Short summary + detailed description — [`store-listing.md`](store-listing.md)

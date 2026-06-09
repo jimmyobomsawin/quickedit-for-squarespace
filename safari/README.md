@@ -36,6 +36,12 @@ Output: `/tmp/quickedit-for-squarespace-derived/Build/Products/Debug/QuickEdit f
 ../scripts/release-safari.sh 0.4.1 --dry-run        # archive + export only
 ```
 
+## Store listing
+
+App Store Connect listing copy (subtitle, description, keywords, What's New,
+App Review notes, privacy/URLs) is in [`store-listing.md`](store-listing.md).
+Screenshots: `../landing-page/screenshots/*.png` (1280×800, RGB, no alpha).
+
 ## Bundle IDs
 
 - App: `com.jimmytechsf.QuickEditForSquarespace`

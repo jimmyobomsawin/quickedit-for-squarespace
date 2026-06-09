@@ -90,6 +90,48 @@ If you ever rename the bundle: change both at once and never let them diverge.
 - **IDN / punycode.** `location.hostname` is punycode (`xn--…`) for internationalized domains, while a user typing the Unicode form into Options stores Unicode, so they won't match. Niche; if it ever matters, normalize both sides with `new URL("https://" + host).hostname`.
 - **Per-device mappings.** Mappings live in `chrome.storage.local` (not `sync`), so they don't roam between machines and don't survive an extension-ID change (e.g., loading unpacked from a different path wipes them). Deliberate trade for reliability on Brave; revisit with an export/import JSON pair if multi-device sync is ever wanted.
 
-## Edit-mode detection (sidebar toggle)
+## Corner controls & the editing flow
 
-The in-editor "show/hide sidebar" dog-ear must disappear while Squarespace's page editor is open (otherwise it looks dead — the page tree isn't shown in edit mode, so toggling has no visible effect until exit). Detection signal (confirmed Jun 2026, parent `/config/pages/` doc): preview mode has a top-bar button with text **"Edit"**; edit mode replaces it with **"Save"** and **"Exit"**. `admin_inject.js` hides the toggle when `hasExit || (hasSave && !hasEdit)`. If Squarespace renames those buttons, the toggle simply stops auto-hiding (graceful degradation) — update the text checks in `isEditing()`.
+Two top-left "dog-ear" corner controls, one per side of the flow. Each is a
+corner triangle (the primary action) with a secondary button that drops down on
+hover; the hide of the dropdown is delayed (~.25s) so the cursor can travel from
+the triangle onto it across the small gap.
+
+| Context | Primary (the triangle) | Secondary (drops down on hover) |
+|---|---|---|
+| **Live site** (`overlay_inject.js`) | Pencil → open editor in **this tab** (focus mode) | "Open in new tab" → open editor in a **new tab** |
+| **Editor** (`admin_inject.js`) | Back arrow → **return to the live page** | Sidebar icon → **show/hide the page-tree sidebar** |
+
+Live → editor handoff is the same as before (sessionStorage `frameurl` priming,
+below); same-tab vs new-tab is just `chrome.tabs.update` vs `chrome.tabs.create`
+in `background.js`'s `editTab()`.
+
+**Back-to-live (`src`).** When focus mode is the trigger, `background.js` appends
+`&src=<encoded live URL>` to the editor fragment (`#__sqspedit=<path>&focus=1&src=…`).
+`admin_inject.js` parses it, gates it to `http(s):` at parse time, and — crucially —
+**re-checks the host against the saved mappings at click time** before
+`location.assign()`. A stale/forged `src` can't redirect anywhere outside the
+user's own mapped sites; with no usable `src` it falls back to `history.back()`
+(which lands on the live page in the same-tab flow).
+
+**Direct visits.** If the editor is opened without our fragment (the user went
+straight to `<sub>.squarespace.com/config/...`), `admin_inject.js` reverse-maps the
+subdomain to a saved mapping's public domain; if it matches, it adds the corner
+(back arrow) **without** entering focus mode — the sidebar is left alone, and the
+side toggle still lets the user hide it. The back arrow targets `https://<publicDomain>`
++ the page currently open in the editor (read from `history.state.key` →
+`@@History/<key>.frameUrl`, with `/` as the fallback). Unmapped subdomains are left
+untouched. This works because the corner CSS isn't scoped to `body.qe4sqsp-focus` (so
+it renders without the class), while the sidebar-hiding rules are scoped (so they stay
+dormant until the toggle adds the class). `installCorner(enterFocus)` is the shared
+entry point: `true` for the pencil flow, `false` for direct visits.
+
+**Edit-mode auto-hide.** The whole corner control disappears while Squarespace's
+page editor is open — the page tree isn't shown then (so the sidebar toggle is
+pointless) and Squarespace has its own top-left controls (so ours mustn't sit on
+top of them). Detection signal (confirmed Jun 2026, parent `/config/pages/` doc):
+preview mode has a top-bar button with text **"Edit"**; edit mode replaces it with
+**"Save"** and **"Exit"**. `admin_inject.js` hides the control when
+`hasExit || (hasSave && !hasEdit)`. If Squarespace renames those buttons, the
+control simply stops auto-hiding (graceful degradation) — update the text checks
+in `isEditing()`.

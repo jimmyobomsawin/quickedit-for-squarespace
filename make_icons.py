@@ -1,13 +1,20 @@
 """Generate toolbar icons + macOS AppIcon for QuickEdit for Squarespace.
 
+Single source of truth: the **landing-page logo** (landing-page/index.html) — a
+detailed yellow #2 pencil (red eraser → metal ferrule → yellow body → wood cone
+→ graphite tip) rotated 45° over a bold "SQ", on a soft rounded-square tile.
+This script reproduces that exact mark so every surface matches the landing page.
+
 Outputs:
   extension/icons/icon-{16,32,48,128}.png      (browser toolbar)
-  safari/Assets.xcassets/AppIcon.appiconset/   (macOS app shell — 16/32/128/256/512 @1x and @2x + Contents.json)
+  safari/Assets.xcassets/AppIcon.appiconset/   (macOS app shell — 16/32/128/256/512 @1x and @2x)
+  safari/.../Resources/Icon.png                (app shell window)
 
 Run: python3 make_icons.py
+(Then `./scripts/sync-extension.sh` to copy the toolbar icons into the Safari extension.)
 """
-from PIL import Image, ImageDraw, ImageFont
-import math, os, json
+from PIL import Image, ImageDraw, ImageFont, ImageChops
+import os
 
 REPO = os.path.dirname(os.path.abspath(__file__))
 EXT_ICONS = os.path.join(REPO, "extension", "icons")
@@ -15,14 +22,22 @@ SAFARI_APP_DIR = os.path.join(REPO, "safari", "QuickEdit for Squarespace")
 APPICON_DIR = os.path.join(SAFARI_APP_DIR, "Assets.xcassets", "AppIcon.appiconset")
 SAFARI_WEB_ICON = os.path.join(SAFARI_APP_DIR, "Resources", "Icon.png")  # shown in the app shell window
 
-# Pencil palette
-PENCIL_BODY = (250, 204, 21, 255)
-PENCIL_TIP = (24, 24, 27, 255)
-ERASER = (244, 67, 54, 255)
-STROKE = (24, 24, 27, 255)
+# ---- Landing-page logo palette (exact hex values from landing-page/index.html) ----
+TILE_BG = (245, 245, 247, 255)   # --qe-soft  #f5f5f7  (rounded-square background)
+SQ_COLOR = (42, 42, 46, 255)     # logo ::before color  #2a2a2e
+ERASER = (244, 67, 54, 255)      # #f44336
+FERRULE = (156, 163, 175, 255)   # #9ca3af  (metal band)
+BODY = (250, 204, 21, 255)       # #facc15  (yellow body)
+WOOD = (233, 196, 106, 255)      # #e9c46a  (wood cone)
+TIP = (168, 162, 158, 255)       # #a8a29e  (graphite tip)
+STROKE = (17, 17, 17, 255)       # #111
 
-# "SQ" backdrop
-SQ_COLOR = (40, 40, 44, 255)
+TILE_RADIUS_FRAC = 0.225         # 36/160 — also Apple's HIG corner radius
+SQ_HEIGHT_FRAC = 0.46            # cap height ≈ landing page's 96px in a 160px box
+
+# Pencil geometry in the SVG's 100-unit viewBox (drawn vertical, rotated at render).
+PENCIL_STROKE_W = 1.4            # stroke-width in 100-unit space
+PENCIL_ROTATE = 45               # SVG rotate(45 50 50) — clockwise
 
 FONT_CANDIDATES = [
     "/System/Library/Fonts/Supplemental/Arial Black.ttf",
@@ -43,99 +58,118 @@ def find_font_path():
 FONT_PATH = find_font_path()
 
 
-def draw_sq(draw, size):
-    text = "SQ"
+def _fit_sq_font(text, target_h, max_w):
+    """Largest font whose rendered bbox fits within target_h AND max_w."""
     if not FONT_PATH:
-        font = ImageFont.load_default()
-    else:
-        font_size = size
-        while font_size > 4:
-            font = ImageFont.truetype(FONT_PATH, font_size)
-            bbox = draw.textbbox((0, 0), text, font=font)
-            w = bbox[2] - bbox[0]
-            h = bbox[3] - bbox[1]
-            if w <= size * 0.98 and h <= size * 0.98:
-                break
-            font_size -= 1
-    bbox = draw.textbbox((0, 0), text, font=font)
-    w = bbox[2] - bbox[0]
-    h = bbox[3] - bbox[1]
-    x = (size - w) // 2 - bbox[0]
-    y = (size - h) // 2 - bbox[1]
+        return ImageFont.load_default()
+    scratch = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    chosen = 4
+    for s in range(4, int(target_h * 3) + 2):
+        f = ImageFont.truetype(FONT_PATH, s)
+        b = scratch.textbbox((0, 0), text, font=f)
+        w, h = b[2] - b[0], b[3] - b[1]
+        if h <= target_h and w <= max_w:
+            chosen = s
+        else:
+            break
+    return ImageFont.truetype(FONT_PATH, chosen)
+
+
+def draw_sq(draw, S):
+    text = "SQ"
+    font = _fit_sq_font(text, SQ_HEIGHT_FRAC * S, 0.92 * S)
+    b = draw.textbbox((0, 0), text, font=font)
+    w, h = b[2] - b[0], b[3] - b[1]
+    x = (S - w) / 2 - b[0]
+    y = (S - h) / 2 - b[1]
     draw.text((x, y), text, fill=SQ_COLOR, font=font)
 
 
-def draw_pencil(draw, size):
-    pad = max(1, size // 12)
-    tip = (size - pad, pad)
-    end = (pad, size - pad)
-    width = max(2, int(size * 0.22))
-    dx, dy = end[0] - tip[0], end[1] - tip[1]
-    L = math.hypot(dx, dy)
-    px, py = -dy / L * (width / 2), dx / L * (width / 2)
+def _render_pencil_layer(S):
+    """Detailed #2 pencil from the landing-page SVG, drawn on its own SxS layer
+    and rotated 45° clockwise about center (matches SVG rotate(45 50 50))."""
+    layer = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    k = S / 100.0  # 100-unit viewBox → canvas px
+    sw = max(1, round(PENCIL_STROKE_W * k))
 
-    def lerp(a, b, t):
-        return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+    def P(x, y):
+        return (x * k, y * k)
 
-    p_tip = tip
-    p_woodEnd = lerp(tip, end, 0.16)
-    p_bodyEnd = lerp(tip, end, 0.82)
-    p_eraser = end
-
-    def quad(a, b, fill):
-        poly = [
-            (a[0] + px, a[1] + py),
-            (a[0] - px, a[1] - py),
-            (b[0] - px, b[1] - py),
-            (b[0] + px, b[1] + py),
-        ]
-        draw.polygon(poly, fill=fill, outline=STROKE)
-
-    tri = [
-        p_tip,
-        (p_woodEnd[0] + px, p_woodEnd[1] + py),
-        (p_woodEnd[0] - px, p_woodEnd[1] - py),
+    # (fill, x, y, w, h) — top→down: eraser, ferrule, body
+    rects = [
+        (ERASER, 44, 14, 12, 9.0),
+        (FERRULE, 44, 23, 12, 2.5),
+        (BODY, 44, 25.5, 12, 47.0),
     ]
-    draw.polygon(tri, fill=PENCIL_TIP, outline=STROKE)
-    quad(p_woodEnd, p_bodyEnd, PENCIL_BODY)
-    quad(p_bodyEnd, p_eraser, ERASER)
+    # (fill, [points]) — wood cone then graphite tip
+    polys = [
+        (WOOD, [(44, 72.5), (56, 72.5), (54, 82), (46, 82)]),
+        (TIP, [(46, 82), (54, 82), (50, 90)]),
+    ]
+
+    # Fills first.
+    for fill, x, y, w, h in rects:
+        d.rectangle([P(x, y), P(x + w, y + h)], fill=fill)
+    for fill, pts in polys:
+        d.polygon([P(*p) for p in pts], fill=fill)
+
+    # Then stroke each shape separately so the internal dividers show (as in the SVG).
+    def stroke_closed(points):
+        pts = [P(*p) for p in points]
+        d.line(pts + [pts[0]], fill=STROKE, width=sw, joint="curve")
+
+    for _, x, y, w, h in rects:
+        stroke_closed([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
+    for _, pts in polys:
+        stroke_closed(pts)
+
+    # PIL rotates CCW for positive angles; SVG rotate(45) is clockwise → use -45.
+    return layer.rotate(-PENCIL_ROTATE, resample=Image.BICUBIC, center=(S / 2, S / 2), expand=False)
 
 
-def make_browser_icon(size, with_backdrop=True):
-    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    if with_backdrop:
-        draw_sq(draw, size)
-    draw_pencil(draw, size)
-    return img
+def render_logo(size, supersample=8):
+    """The landing-page logo at `size` px: soft rounded tile + SQ + rotated pencil."""
+    S = size * supersample
+    r = round(size * TILE_RADIUS_FRAC) * supersample
 
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=r, fill=TILE_BG)
+    draw_sq(d, S)
 
-def make_app_icon(size):
-    # macOS app icons sit inside a rounded square. Apple's HIG: corner radius ~22.5%.
-    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    radius = int(size * 0.225)
-    draw.rounded_rectangle([0, 0, size - 1, size - 1], radius=radius, fill=(245, 245, 247, 255))
+    pencil = _render_pencil_layer(S)
 
-    inset = int(size * 0.10)
-    inner_size = size - 2 * inset
-    inner = Image.new("RGBA", (inner_size, inner_size), (0, 0, 0, 0))
-    inner_draw = ImageDraw.Draw(inner)
-    draw_sq(inner_draw, inner_size)
-    draw_pencil(inner_draw, inner_size)
-    img.paste(inner, (inset, inset), inner)
-    return img
+    # Subtle drop-shadow: landing page uses drop-shadow(-1.5px 1.5px 0 / 6% black)
+    # relative to the 160px logo; scale the offset to this size.
+    k_box = (size / 160.0) * supersample
+    dx, dy = round(-1.5 * k_box), round(1.5 * k_box)
+    shadow = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    blk = Image.new("RGBA", (S, S), (0, 0, 0, 255))
+    blk.putalpha(pencil.split()[3].point(lambda a: int(a * 0.06)))
+    shadow.paste(blk, (dx, dy), blk)
+
+    img = Image.alpha_composite(img, shadow)
+    img = Image.alpha_composite(img, pencil)
+
+    # Clip to the rounded tile (matches the landing page's overflow:hidden) so the
+    # rotated pencil never poked past the corners.
+    mask = Image.new("L", (S, S), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, S - 1, S - 1], radius=r, fill=255)
+    img.putalpha(ImageChops.multiply(img.split()[3], mask))
+
+    return img.resize((size, size), Image.LANCZOS)
 
 
 def write_browser_icons():
     os.makedirs(EXT_ICONS, exist_ok=True)
     for s in (16, 32, 48, 128):
-        make_browser_icon(s).save(os.path.join(EXT_ICONS, f"icon-{s}.png"))
+        render_logo(s).save(os.path.join(EXT_ICONS, f"icon-{s}.png"))
     print("wrote browser icons to", EXT_ICONS)
 
 
-# macOS AppIcon set — matches the naming convention safari-web-extension-converter
-# generated for the AppIcon.appiconset (Contents.json already references these names).
+# macOS AppIcon set — names match what safari-web-extension-converter scaffolded
+# into Contents.json (we only overwrite the PNGs).
 APP_ICON_VARIANTS = [
     ("mac-icon-16@1x.png", 16, 1),
     ("mac-icon-16@2x.png", 16, 2),
@@ -151,22 +185,19 @@ APP_ICON_VARIANTS = [
 
 
 def write_app_icon_set():
-    # Only run if Safari project exists. The converter generates the Contents.json
-    # at scaffold time; we just overwrite the PNGs (filenames already match).
     if not os.path.isdir(APPICON_DIR):
         print(f"  (skipping AppIcon — {APPICON_DIR} not found, run safari-web-extension-converter first)")
         return
     for fname, pt, scale in APP_ICON_VARIANTS:
-        px = pt * scale
-        make_app_icon(px).save(os.path.join(APPICON_DIR, fname))
+        render_logo(pt * scale).save(os.path.join(APPICON_DIR, fname))
     print("wrote macOS AppIcon set to", APPICON_DIR)
 
 
 def write_safari_web_icon():
     if not os.path.isdir(os.path.dirname(SAFARI_WEB_ICON)):
         return
-    # 128px icon used inside the app shell window (Main.html references ../Icon.png).
-    make_app_icon(128).save(SAFARI_WEB_ICON)
+    # 128px icon shown inside the app shell window (Main.html references ../Icon.png).
+    render_logo(128).save(SAFARI_WEB_ICON)
     print("wrote app shell window icon to", SAFARI_WEB_ICON)
 
 

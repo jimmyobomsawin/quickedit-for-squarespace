@@ -147,10 +147,28 @@ async function editTab(tab, opts = {}) {
   const frameUrl = (u.pathname || "/") + (u.search || "");
   // Pass the target path via URL fragment so admin_inject.js can read it
   // synchronously at document_start (before the admin shell boots).
-  // Append &focus=1 when the overlay's focus-mode button was the trigger.
+  // Append &focus=1 when focus mode was the trigger.
   let fragment = `${EDIT_SENTINEL}=${encodeURIComponent(frameUrl)}`;
-  if (opts.focus) fragment += "&focus=1";
+  if (opts.focus) {
+    fragment += "&focus=1";
+    // Carry the originating live URL so the in-editor "back to live page"
+    // dog-ear knows where to return — works even when opened in a new tab.
+    // admin_inject.js re-validates it (http(s) + matches a saved mapping)
+    // before ever navigating, so a stale/forged value can't redirect anywhere.
+    fragment += `&src=${encodeURIComponent(tab.url)}`;
+  }
   const adminUrl = `https://${sqsp}.squarespace.com${ADMIN_PATH}#${fragment}`;
+
+  // Same-tab navigation (the overlay pencil) reuses the current tab; the
+  // drop-down "open in new tab" button (and context menus) create a new one.
+  if (opts.sameTab && tab.id != null && tab.id !== chrome.tabs.TAB_ID_NONE) {
+    try {
+      await chrome.tabs.update(tab.id, { url: adminUrl });
+      return;
+    } catch (e) {
+      console.warn("[QuickEdit] same-tab navigation failed, opening a new tab:", e);
+    }
+  }
   await chrome.tabs.create({ url: adminUrl, index: tab.index + 1 });
 }
 
@@ -203,6 +221,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 // sender's tab and run the edit flow on that tab.
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg && msg.type === "edit-this-page" && sender && sender.tab) {
-    editTab(sender.tab, { focus: !!msg.focus });
+    editTab(sender.tab, { focus: !!msg.focus, sameTab: !!msg.sameTab });
   }
 });

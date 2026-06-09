@@ -1,6 +1,6 @@
 # QuickEdit for Squarespace
 
-A small browser extension that adds a **pencil overlay in the top-right corner** of any page on your Squarespace site. Click it and the editor for that exact page opens in a new tab — no more hunting through the admin to find the page you're already looking at.
+A small browser extension that adds a **pencil overlay in the top-left corner** of any page on your Squarespace site. Click it and the editor for that exact page opens in the same tab (hover the pencil for a new-tab option) — no more hunting through the admin to find the page you're already looking at.
 
 Works in **Chrome / Brave / Edge** and **Safari** (macOS).
 
@@ -16,7 +16,7 @@ Or build from source — see below.
 ## How it works
 
 1. You map each of your public domains to its Squarespace subdomain in **Options** (e.g. `jimmytechsf.com` → `squarespace-jimmytechsf`). The **Import from Squarespace** button on the options page pulls the list straight from your [account.squarespace.com](https://account.squarespace.com) dashboard.
-2. A dog-ear overlay appears on every page of a mapped site.
+2. A dog-ear overlay appears on every page of a mapped site. Click it to open that page's editor in the same tab; hover it for a new-tab option. Inside the editor, the corner becomes a back-arrow that returns you to the live page (hover it to re-show the page tree).
 3. Clicking it opens `https://<subdomain>.squarespace.com/config/pages/` with the right page pre-loaded in the editor iframe — by injecting the `@@History/<key>` and `frameurl` entries that Squarespace's admin SPA reads at boot.
 
 The technique is the same one the dashboard's Engagement page uses internally to open a row's editor in a new tab.
