@@ -22,10 +22,12 @@
 //          (navigates to the validated `src` URL)
 //        • secondary (drops down on hover) → the sidebar show/hide toggle.
 //
-// Direct visits: if the editor is opened WITHOUT our fragment but on a site the
-// user has mapped, we add the corner (back arrow) WITHOUT hiding the sidebar — the
-// side toggle still lets the user enter focus mode. The back arrow is derived from
-// the mapping's public domain + the page currently open in the editor.
+// Direct visits & non-focus arrivals: if the editor is opened WITHOUT focus mode
+// (no fragment at all, or a fragment without focus=1, e.g. the plain context-menu
+// item) on a site the user has mapped, we add the corner (back arrow) WITHOUT
+// hiding the sidebar — the side toggle still lets the user enter focus mode. The
+// back arrow uses the validated src when present, else the mapping's public
+// domain + the page currently open in the editor.
 
 (() => {
   const TAG = "[QuickEdit for Squarespace]";
@@ -39,7 +41,7 @@
     const SENTINEL = "__sqspedit=";
     const hash = location.hash || "";
     const idx = hash.indexOf(SENTINEL);
-    if (idx === -1) { applyOnMappedDirectVisit(); return; }
+    if (idx === -1) { installCornerForMappedSite(); return; }
 
     const rest = hash.slice(idx + SENTINEL.length);
     const ampIdx = rest.indexOf("&");
@@ -93,7 +95,10 @@
 
     console.info(TAG, "primed history.state.key =", key, "frameUrl =", frameUrl, focus ? "(focus mode)" : "");
 
+    // Focus arrival → corner + hidden sidebar. Non-focus arrival (e.g. the plain
+    // context-menu item) → corner only, same treatment as a direct visit.
     if (focus) installCorner(true);
+    else installCornerForMappedSite();
   } catch (e) {
     console.warn(TAG, "admin_inject error:", e);
   }
@@ -121,8 +126,8 @@
         }
         console.warn(TAG, "src host not in mappings, not navigating:", h);
       }
-      // Direct visit: build the live URL from the mapped public domain + the page
-      // currently open in the editor (live homepage as a safe fallback).
+      // No (valid) src: build the live URL from the mapped public domain + the
+      // page currently open in the editor (live homepage as a safe fallback).
       if (liveDomain) {
         location.assign("https://" + liveDomain + currentEditorPath());
         return;
@@ -151,10 +156,11 @@
     return "/";
   }
 
-  // Direct visit (no #__sqspedit handoff): if this is the editor of a site we've
-  // mapped, add the corner (back arrow) WITHOUT hiding the sidebar. The user can
-  // still hide it from the side toggle. Remembers the public domain for the arrow.
-  async function applyOnMappedDirectVisit() {
+  // Non-focus entry (direct visit, or a fragment arrival without focus=1): if this
+  // is the editor of a site we've mapped, add the corner (back arrow) WITHOUT
+  // hiding the sidebar. The user can still hide it from the side toggle.
+  // Remembers the public domain for the arrow.
+  async function installCornerForMappedSite() {
     try {
       const host = location.hostname.toLowerCase();
       if (!host.endsWith(".squarespace.com")) return;
@@ -162,10 +168,18 @@
       const { mappings = [] } = await chrome.storage.local.get({ mappings: [] });
       const m = mappings.find((x) => (x.sqspSubdomain || "").trim().toLowerCase() === sub);
       if (!m || !m.publicDomain) return;  // not a mapped site → leave the editor untouched
-      liveDomain = m.publicDomain;
+      // Defensive: a hand-edited mapping with a malformed domain (spaces, slashes,
+      // a scheme) would build a broken or surprising URL — require a plausible
+      // hostname, mirroring background.js's subdomain check.
+      const domain = String(m.publicDomain).trim().toLowerCase();
+      if (!/^[a-z0-9][a-z0-9.-]*\.[a-z0-9-]+$/.test(domain)) {
+        console.warn(TAG, "invalid publicDomain in mapping:", m.publicDomain);
+        return;
+      }
+      liveDomain = domain;
       installCorner(false);  // show the corner, but don't strip the sidebar
     } catch (e) {
-      console.warn(TAG, "direct-visit detection error:", e);
+      console.warn(TAG, "mapped-site corner error:", e);
     }
   }
 
@@ -272,8 +286,12 @@
         filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.25));
         transition: opacity .18s ease .25s, transform .18s ease .25s, visibility 0s linear .43s;
       }
+      /* :focus-visible keeps the dropdown reachable by keyboard — it's tabbable,
+         so it must become visible when tabbed onto, not just on pointer hover. */
       .qe4sqsp-back:hover ~ .qe4sqsp-sidebar-toggle,
-      .qe4sqsp-sidebar-toggle:hover {
+      .qe4sqsp-back:focus-visible ~ .qe4sqsp-sidebar-toggle,
+      .qe4sqsp-sidebar-toggle:hover,
+      .qe4sqsp-sidebar-toggle:focus-visible {
         opacity: 1;
         visibility: visible;
         transform: translateY(0) scale(1);
@@ -404,16 +422,16 @@
     // page-tree sidebar isn't shown, and Squarespace has its own top-left
     // controls — so ours shouldn't sit on top of them. Restore on exit to preview.
     function isEditing() {
-      let hasEdit = false, hasExit = false, hasSave = false;
+      let hasEdit = false, hasSave = false;
       for (const b of document.querySelectorAll("button")) {
         const t = (b.textContent || "").trim();
+        if (t === "Exit") return true; // unambiguous edit-mode signal — stop scanning
         if (t === "Edit") hasEdit = true;
-        else if (t === "Exit") hasExit = true;
         else if (t === "Save") hasSave = true;
       }
       // Positive signal (Exit/Save present) so we never false-hide during load,
       // before the "Edit" button has rendered.
-      return hasExit || (hasSave && !hasEdit);
+      return hasSave && !hasEdit;
     }
     function syncCornerVisibility() {
       const editing = isEditing();

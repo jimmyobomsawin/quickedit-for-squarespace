@@ -106,25 +106,28 @@ Live → editor handoff is the same as before (sessionStorage `frameurl` priming
 below); same-tab vs new-tab is just `chrome.tabs.update` vs `chrome.tabs.create`
 in `background.js`'s `editTab()`.
 
-**Back-to-live (`src`).** When focus mode is the trigger, `background.js` appends
-`&src=<encoded live URL>` to the editor fragment (`#__sqspedit=<path>&focus=1&src=…`).
+**Back-to-live (`src`).** `background.js` appends `&src=<encoded live URL>` to every
+editor fragment (`#__sqspedit=<path>[&focus=1]&src=…`), focus or not.
 `admin_inject.js` parses it, gates it to `http(s):` at parse time, and — crucially —
 **re-checks the host against the saved mappings at click time** before
 `location.assign()`. A stale/forged `src` can't redirect anywhere outside the
 user's own mapped sites; with no usable `src` it falls back to `history.back()`
 (which lands on the live page in the same-tab flow).
 
-**Direct visits.** If the editor is opened without our fragment (the user went
-straight to `<sub>.squarespace.com/config/...`), `admin_inject.js` reverse-maps the
-subdomain to a saved mapping's public domain; if it matches, it adds the corner
-(back arrow) **without** entering focus mode — the sidebar is left alone, and the
-side toggle still lets the user hide it. The back arrow targets `https://<publicDomain>`
-+ the page currently open in the editor (read from `history.state.key` →
-`@@History/<key>.frameUrl`, with `/` as the fallback). Unmapped subdomains are left
-untouched. This works because the corner CSS isn't scoped to `body.qe4sqsp-focus` (so
-it renders without the class), while the sidebar-hiding rules are scoped (so they stay
-dormant until the toggle adds the class). `installCorner(enterFocus)` is the shared
-entry point: `true` for the pencil flow, `false` for direct visits.
+**Direct visits & non-focus arrivals.** If the editor is opened without focus mode —
+no fragment at all (the user went straight to `<sub>.squarespace.com/config/...`), or
+a fragment without `focus=1` (the plain context-menu item) — `admin_inject.js`
+reverse-maps the subdomain to a saved mapping's public domain; if it matches (and the
+domain passes a hostname sanity check), it adds the corner (back arrow) **without**
+entering focus mode — the sidebar is left alone, and the side toggle still lets the
+user hide it. The back arrow prefers the validated `src` when present, else targets
+`https://<publicDomain>` + the page currently open in the editor (read from
+`history.state.key` → `@@History/<key>.frameUrl`, with `/` as the fallback). Unmapped
+subdomains are left untouched. This works because the corner CSS isn't scoped to
+`body.qe4sqsp-focus` (so it renders without the class), while the sidebar-hiding rules
+are scoped (so they stay dormant until the toggle adds the class).
+`installCorner(enterFocus)` is the shared entry point: `true` for the pencil/focus
+flow, `false` via `installCornerForMappedSite()` for everything else.
 
 **Edit-mode auto-hide.** The whole corner control disappears while Squarespace's
 page editor is open — the page tree isn't shown then (so the sidebar toggle is

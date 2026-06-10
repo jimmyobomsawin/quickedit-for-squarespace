@@ -149,14 +149,13 @@ async function editTab(tab, opts = {}) {
   // synchronously at document_start (before the admin shell boots).
   // Append &focus=1 when focus mode was the trigger.
   let fragment = `${EDIT_SENTINEL}=${encodeURIComponent(frameUrl)}`;
-  if (opts.focus) {
-    fragment += "&focus=1";
-    // Carry the originating live URL so the in-editor "back to live page"
-    // dog-ear knows where to return — works even when opened in a new tab.
-    // admin_inject.js re-validates it (http(s) + matches a saved mapping)
-    // before ever navigating, so a stale/forged value can't redirect anywhere.
-    fragment += `&src=${encodeURIComponent(tab.url)}`;
-  }
+  if (opts.focus) fragment += "&focus=1";
+  // Carry the originating live URL so the in-editor "back to live page"
+  // dog-ear knows where to return — for both focus and normal arrivals, and
+  // even when opened in a new tab. admin_inject.js re-validates it (http(s) +
+  // matches a saved mapping) before ever navigating, so a stale/forged value
+  // can't redirect anywhere.
+  fragment += `&src=${encodeURIComponent(tab.url)}`;
   const adminUrl = `https://${sqsp}.squarespace.com${ADMIN_PATH}#${fragment}`;
 
   // Same-tab navigation (the overlay pencil) reuses the current tab; the

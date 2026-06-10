@@ -65,10 +65,10 @@ security add-generic-password -s QuickEditForSquarespace_CWS -a clientSecret  -w
 security add-generic-password -s QuickEditForSquarespace_CWS -a refreshToken  -w '…'
 security add-generic-password -s QuickEditForSquarespace_CWS -a extensionId   -w '…'
 
-# Release
-./scripts/release-chrome.sh 0.4.1                  # upload as draft
-./scripts/release-chrome.sh 0.4.1 --auto-publish   # upload + publish
-./scripts/release-chrome.sh 0.4.1 --dry-run        # build only
+# Release (versions are CalVer: YY.M for the first release of a month, YY.M.N after)
+./scripts/release-chrome.sh 26.6.1                  # upload as draft
+./scripts/release-chrome.sh 26.6.1 --auto-publish   # upload + publish
+./scripts/release-chrome.sh 26.6.1 --dry-run        # build only
 ```
 
 **Mac App Store** *(needs an active Apple Developer Program membership + Apple Distribution cert in Keychain)*:
@@ -79,8 +79,8 @@ security add-generic-password -s AC_PASSWORD -a appleId  -w 'you@example.com'
 security add-generic-password -s AC_PASSWORD -a "you@example.com" -w '<app-specific-password>'
 
 # Release
-./scripts/release-safari.sh 0.4.1                  # archive, export, upload to App Store Connect
-./scripts/release-safari.sh 0.4.1 --dry-run        # archive + export only, opens .pkg in Finder
+./scripts/release-safari.sh 26.6.1                  # archive, export, upload to App Store Connect
+./scripts/release-safari.sh 26.6.1 --dry-run        # archive + export only, opens .pkg in Finder
 ```
 
 Both release scripts also call `gh release` to attach build artefacts to a GitHub release tagged `v<version>`.

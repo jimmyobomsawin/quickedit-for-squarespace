@@ -84,7 +84,7 @@ if command -v gh >/dev/null 2>&1 && git -C "$REPO_DIR" remote 2>/dev/null | grep
       --generate-notes || echo "  (gh release create failed — make sure repo + remote are set up)"
   fi
 else
-  echo "  (gh CLI not installed — skipping GitHub release step)"
+  echo "  (no gh CLI or no git remote — skipping GitHub release step)"
 fi
 
 echo "✓ chrome release $VERSION complete"

@@ -18,6 +18,9 @@
       if (!m) continue;
       const subdomain = m[1].toLowerCase();
       if (seen.has(subdomain)) continue;
+      // Never import Squarespace's own infrastructure hosts — a dashboard markup
+      // change could otherwise surface e.g. account.squarespace.com as a "site".
+      if (["account", "www", "login", "static1", "assets"].includes(subdomain)) continue;
 
       // Find the smallest ancestor that contains only this one site link.
       let card = a.parentElement;

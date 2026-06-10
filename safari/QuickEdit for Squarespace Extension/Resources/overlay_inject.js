@@ -103,8 +103,12 @@
         filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.25));
         transition: opacity .18s ease .25s, transform .18s ease .25s, visibility 0s linear .43s;
       }
+      /* :focus-visible keeps the dropdown reachable by keyboard — it's tabbable,
+         so it must become visible when tabbed onto, not just on pointer hover. */
       .sqsp-edit-overlay__pencil:hover ~ .sqsp-edit-overlay__more,
-      .sqsp-edit-overlay__more:hover {
+      .sqsp-edit-overlay__pencil:focus-visible ~ .sqsp-edit-overlay__more,
+      .sqsp-edit-overlay__more:hover,
+      .sqsp-edit-overlay__more:focus-visible {
         opacity: 1;
         visibility: visible;
         transform: translateY(0) scale(1);

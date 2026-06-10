@@ -17,8 +17,8 @@ See the [top-level README](../README.md#release) for the full release flow.
 Quick version:
 
 ```sh
-./scripts/release-chrome.sh 0.4.1                  # draft upload
-./scripts/release-chrome.sh 0.4.1 --auto-publish   # upload + publish
+./scripts/release-chrome.sh 26.6.1                  # draft upload
+./scripts/release-chrome.sh 26.6.1 --auto-publish   # upload + publish
 ```
 
 ## Store listing assets

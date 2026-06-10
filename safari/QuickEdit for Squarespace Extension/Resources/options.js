@@ -211,6 +211,23 @@ saveBtn.addEventListener("click", async () => {
 
   await chrome.storage.local.set({ mappings });
 
+  // Best-effort privacy cleanup: revoke host access for sites that are no longer
+  // mapped, so removing a mapping also drops the permission it granted. Required
+  // permissions (*.squarespace.com) are filtered out; failures are non-fatal
+  // (Safari's permissions model differs, and background re-reconciles on change).
+  try {
+    if (chrome.permissions && chrome.permissions.getAll && chrome.permissions.remove) {
+      const all = await chrome.permissions.getAll();
+      const needed = new Set(origins);
+      const stale = (all.origins || []).filter(
+        (o) => o !== "*://*.squarespace.com/*" && !needed.has(o)
+      );
+      if (stale.length) await chrome.permissions.remove({ origins: stale });
+    }
+  } catch (e) {
+    console.warn("[QuickEdit] stale-permission cleanup skipped:", e);
+  }
+
   if (!origins.length) {
     setStatus("Saved. Add a site above, then Save again to grant access.");
   } else if (granted) {

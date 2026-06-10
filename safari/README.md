@@ -32,8 +32,8 @@ Output: `/tmp/quickedit-for-squarespace-derived/Build/Products/Debug/QuickEdit f
 ## Production release
 
 ```sh
-../scripts/release-safari.sh 0.4.1                  # archive + export + upload
-../scripts/release-safari.sh 0.4.1 --dry-run        # archive + export only
+../scripts/release-safari.sh 26.6.1                  # archive + export + upload
+../scripts/release-safari.sh 26.6.1 --dry-run        # archive + export only
 ```
 
 ## Store listing
